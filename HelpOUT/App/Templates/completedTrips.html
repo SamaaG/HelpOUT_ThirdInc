@@ -1,0 +1,60 @@
+﻿<div class="row top-buffer center-text">
+
+    <div class="col-md-4">
+        <a href="#tasks" class="nav-btn" id="tasksBtn">
+            <img class="nav-icon" src="../../Content/imgs/CheckList.png" title="Active Tasks" /><br />Tasks
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="#trips" class="nav-btn" id="tripsBtn">
+            <img class="nav-icon" src="../../Content/imgs/trips icon.png" title="Active Trips" /><br />Trips
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="#locations" class="nav-btn" id="locationsBtn">
+            <img class="nav-icon" src="../../Content/imgs/saved places.png" title="Saved Locations" /><br />Locations
+        </a>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-md-12">
+        <h1>Completed Trips</h1>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-md-12">
+        <h1 class="subtle" ng-show="trips.length === 0">There's nothing here, yet.</h1>
+        <table class="table table-striped" ng-show="trips.length > 0">
+            <tr>
+                <th>
+                    <a class="tbl-hd" href="" ng-click="sort('title')">
+                        Title <span ng-class="{'glyphicon glyphicon-chevron-up' : sortType === 'title' && !sortReverse, 'glyphicon glyphicon-chevron-down' : sortType === 'title' && sortReverse, 'glyphicon glyphicon-minus opaque' : sortType != 'title'}"></span>
+                    </a>
+                </th>
+                <th>
+                    <a class="tbl-hd" href="" ng-click="sort('date')">
+                        Start time <span ng-class="{'glyphicon glyphicon-chevron-up' : sortType === 'date' && !sortReverse, 'glyphicon glyphicon-chevron-down' : sortType === 'date' && sortReverse, 'glyphicon glyphicon-minus opaque' : sortType != 'date'}"></span>
+                    </a>
+                </th>
+                <th>Comments</th>
+                <th class="text-center"><span class="glyphicon glyphicon-ok"></span></th>
+            </tr>
+            <tr ng-repeat="trip in trips | orderBy:sortType:sortReverse | filter:filters" class="selectRow" ng-class="{success: trip.checked}">
+                <td ng-click="viewTrip(trip)"><button type="button" class="btn btn-link titleBtn">{{trip.title}}</button></td>
+                <td ng-click="viewTrip(trip)">{{trip.datetime | date:'M/d/yyyy hh:mma'}}</td>
+                <td class="multiline" ng-click="viewTrip(trip)">{{trip.comments}}</td>
+                <td ng-click="trip.checked = !trip.checked; selectTrip(trip)" class="text-center"><input type="hidden" ng-model="trip.checked" /><span ng-class="{'glyphicon glyphicon-ok' : trip.checked, 'glyphicon glyphicon-unchecked' : !trip.checked}"></span></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="row" ng-show="trips.length > 0">
+    <div class="col-md-12 text-right">
+        <button class="btn btn-danger-pastel" ng-click="removeTrip()" ng-disabled="!anyTripsSelected">
+            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;&nbsp;Delete
+        </button>
+    </div>
+</div>

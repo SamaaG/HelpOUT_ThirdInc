@@ -1,0 +1,41 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+    <h4 class="modal-title">Add task(s) to your trip</h4>
+</div>
+<div class="modal-body">
+    <table class="table table-striped">
+        <tr>
+            <th>
+                <a class="tbl-hd" href="" ng-click="sort('title')">
+                    Title&nbsp;<span ng-show="sortType === 'title' && !sortReverse" class="glyphicon glyphicon-chevron-up"></span><span ng-show="sortType === 'title' && sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+            </th>
+            <th>
+                <a class="tbl-hd" href="" ng-click="sort('date')">
+                    Date&nbsp;<span ng-show="sortType === 'date' && !sortReverse" class="glyphicon glyphicon-chevron-up"></span><span ng-show="sortType === 'date' && sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+            </th>
+            <th>
+                <a class="tbl-hd" href="" ng-click="sort('location')">
+                    Location&nbsp;<span ng-show="sortType === 'location' && !sortReverse" class="glyphicon glyphicon-chevron-up"></span><span ng-show="sortType === 'location' && sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                </a>
+            </th>
+            <th>
+                Comments
+            </th>
+
+            <th><span class="glyphicon glyphicon-ok"></span></th>
+        </tr>
+        <tr ng-repeat="task in tasks | orderBy:sortType:sortReverse | filter:filters" ng-click="task.checked = !task.checked; selectTask(task)" class="selectRow" ng-class="{success: task.checked}">
+            <td>{{task.title}}</td>
+            <td>{{task.datetime | date:'M/d/yyyy hh:mma'}}</td>
+            <td>{{task.comments}}</td>
+            <td>{{task.location}}</td>
+            <td><input type="hidden" ng-model="task.checked"/><span ng-class="{'glyphicon glyphicon-ok' : task.checked, 'glyphicon glyphicon-unchecked' : !task.checked}"></span></td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success-pastel" type="button" ng-click="addTasks()" ng-disabled="!selectedTasks.length">Add tasks</button>
+</div>

@@ -1,0 +1,92 @@
+﻿<div class="row top-buffer center-text">
+    <div class="col-md-4">
+        <a href="#completedTasks" class="nav-btn" id="completedTasksBtn">
+            <img class="nav-icon" src="../../Content/imgs/CheckList.png" title="Completed Tasks" /><br />Completed
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="#trips" class="nav-btn" id="tripsBtn">
+            <img class="nav-icon" src="../../Content/imgs/trips icon.png" title="Active Trips" /><br/>Trips
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="#locations" class="nav-btn" id="locationsBtn">
+            <img class="nav-icon" src="../../Content/imgs/saved places.png" title="Saved Locations" /><br />Locations
+        </a>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-md-6">
+        <h1>Tasks</h1>
+    </div>
+    <div class="col-md-6 text-right">
+        <h1>
+            <!--h1 is needed to align both divs in the same row-->
+            <button class="btn btn-lg btn-default" type="button" ng-click="createTask()">
+                <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;New task
+            </button>
+        </h1>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-md-12">
+        <h1 class="subtle" ng-show="tasks.length === 0">There's nothing here, yet.</h1>
+        <table class="table table-striped" ng-show="tasks.length > 0">
+            <tr>
+                <th>
+                    <a class="tbl-hd" href="" ng-click="sort('title')">
+                        Title <span ng-class="{'glyphicon glyphicon-chevron-up' : sortType === 'title' && !sortReverse, 'glyphicon glyphicon-chevron-down' : sortType === 'title' && sortReverse, 'glyphicon glyphicon-minus opaque' : sortType != 'title'}"></span>
+                    </a>
+                </th>
+                <th>
+                    <a class="tbl-hd" href="" ng-click="sort('date')">
+                        Due date <span ng-class="{'glyphicon glyphicon-chevron-up' : sortType === 'date' && !sortReverse, 'glyphicon glyphicon-chevron-down' : sortType === 'date' && sortReverse, 'glyphicon glyphicon-minus opaque' : sortType != 'date'}"></span>
+                    </a>
+                </th>
+                <th>
+                    <a class="tbl-hd" href="" ng-click="sort('location')">
+                        Location <span ng-class="{'glyphicon glyphicon-chevron-up' : sortType === 'location' && !sortReverse, 'glyphicon glyphicon-chevron-down' : sortType === 'location' && sortReverse, 'glyphicon glyphicon-minus opaque' : sortType != 'location'}"></span>
+                    </a>
+                </th>
+                <th>Comments</th>
+                <th class="text-center"><span class="glyphicon glyphicon-ok"></span></th>
+            </tr>
+            <tr ng-repeat="task in tasks | orderBy:sortType:sortReverse | filter:filters" class="selectRow" ng-class="{success: task.checked, danger: task.datetime < currentDate}">
+                <td ng-click="editTask(task)">
+                    <!--Don't chage the place of this script as the functionality will not work properly-->
+                    <script>
+                        $(function () {
+                            $('[data-toggle="tooltip"]').tooltip();
+                        });
+                    </script>
+                    <button type="button" class="btn btn-danger btn-xs"
+                            data-toggle="tooltip" data-placement="top"
+                            title="Due Date Passed" ng-show="task.datetime < currentDate">
+                        <b>!</b>
+                    </button>
+                    <button type="button" class="btn btn-link titleBtn">{{task.title}}</button>
+                </td>
+                <td ng-click="editTask(task)">{{task.datetime | date:'M/d/yyyy hh:mm a'}}</td>
+                <td ng-click="editTask(task)">{{task.location}}</td>
+                <td class="multiline" ng-click="editTask(task)">{{task.comments}}</td>
+                <td ng-click="task.checked = !task.checked; selectTask(task)" class="text-center"><input type="hidden" ng-model="task.checked" /><span ng-class="{'glyphicon glyphicon-ok' : task.checked, 'glyphicon glyphicon-unchecked' : !task.checked}"></span></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="row" ng-show="tasks.length > 0">
+    <div class="col-md-12 text-right">
+        <button class="btn btn-danger-pastel" ng-click="removeTask()" ng-disabled="!anyTasksSelected">
+            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;&nbsp;Delete
+        </button>
+        <button class="btn btn-success-pastel" ng-click="markFinished()" ng-disabled="!anyTasksSelected">
+            <span class=" glyphicon glyphicon-check"></span>&nbsp;&nbsp;Finished!
+        </button>
+        <button class="btn btn-info-pastel" ng-click="addToNewTrip()" ng-disabled="!anyTasksSelected">
+            <span class=" glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;Add to new trip
+        </button>
+    </div>
+</div>

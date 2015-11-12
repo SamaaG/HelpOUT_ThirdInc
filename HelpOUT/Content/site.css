@@ -1,0 +1,271 @@
+﻿*, h1 {
+    font-family:Trebuchet MS;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+textarea {
+    -moz-resize: vertical;
+    -ms-resize: vertical;
+    -o-resize: vertical;
+    resize: vertical;
+}
+
+.top-buffer {
+    margin-top:20px;
+}
+
+.tbl-hd{
+    color: black;
+}
+
+.tbl-hd:hover, .tbl-hd:active, .tbl-hd:focus {
+    text-decoration: none;
+}
+
+/*puts the google places autocomplete dropdown results above the bootstrap modal 1050 zindex.*/
+.pac-container {
+    z-index: 1051 !important;
+}
+
+a.nav-btn {
+    display: inline-block;
+    height: 250px;
+    width: 100%;
+    padding: 15px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 30px;
+    line-height: 100px;
+    cursor: pointer; 
+}
+
+a.nav-btn:hover {
+    color: #ffffff;
+}
+
+#tripsBtn {
+    background-color: #90C3D4;
+}
+
+#tripsBtn:hover {
+    background-color: #71ACBF;
+}
+
+#completedTripsBtn {
+    background-color: #90C3D4;
+}
+
+#completedTripsBtn:hover {
+    background-color: #71ACBF;
+}
+
+#tasksBtn {
+    background-color: #E99F86;
+}
+
+#tasksBtn:hover {
+    background-color: #DB896E;
+}
+
+#completedTasksBtn {
+    background-color: #E99F86;
+}
+
+#completedTasksBtn:hover {
+    background-color: #DB896E;
+}
+
+#locationsBtn {
+    background-color: #E6D57A;
+}
+
+#locationsBtn:hover {
+    background-color: #DECA5D;
+}
+
+.titleBtn {
+    padding: 0;
+}
+
+.titleBtn:hover {
+    text-decoration: none;
+}
+
+button:focus {
+    outline:0 !important;
+}
+
+.googleLogo {
+    margin-top: 10px;
+    width:30px;
+    height: 30px;
+    -ms-opacity: .75;
+    opacity: .75;
+}
+
+.googleLogo:hover {
+    -ms-opacity: 1;
+    opacity: 1;
+}
+
+.profileInfo{
+    color:white;
+}
+
+.center-text{
+    text-align:center;
+}
+
+.nav-icon{
+    height: 150px;
+}
+
+.modal-header {
+    color: #ffffff;
+    background-color: #9AA992;
+}
+
+.form-control[disabled] {
+    cursor: default !important;
+}
+
+.selectRow:hover td {
+    cursor: pointer !important;
+    background-color: #d9edf7 !important;
+}
+
+.subtle {
+    color: #d3d3d3;
+}
+
+.opaque {
+    -ms-opacity: 0.2;
+    opacity: 0.2;
+}
+
+.multiline {
+    white-space: pre-wrap;
+}
+
+/*pastel buttons*/
+.btn-danger-pastel {
+  color: #ffffff;
+  background-color: #E38892;
+  border-color: #E38892;
+}
+
+.btn-danger-pastel:hover,
+.btn-danger-pastel:focus,
+.btn-danger-pastel:active,
+.btn-danger-pastel.active {
+  color: #ffffff;
+  background-color: #B8555A;
+  border-color: #B8555A;
+}
+
+.btn-danger-pastel.disabled,
+.btn-danger-pastel[disabled],
+fieldset[disabled] .btn-danger-pastel,
+.btn-danger-pastel.disabled:hover,
+.btn-danger-pastel[disabled]:hover,
+fieldset[disabled] .btn-danger-pastel:hover,
+.btn-danger-pastel.disabled:focus,
+.btn-danger-pastel[disabled]:focus,
+fieldset[disabled] .btn-danger-pastel:focus,
+.btn-danger-pastel.disabled:active,
+.btn-danger-pastel[disabled]:active,
+fieldset[disabled] .btn-danger-pastel:active,
+.btn-danger-pastel.disabled.active,
+.btn-danger-pastel[disabled].active,
+fieldset[disabled] .btn-danger-pastel.active {
+  background-color: #E28E8B;
+  border-color: #E28E8B;
+}
+
+.btn-success-pastel {
+  color: #ffffff;
+  background-color: #9AA992;
+  border-color: #9AA992;
+}
+
+.btn-success-pastel:hover,
+.btn-success-pastel:focus,
+.btn-success-pastel:active,
+.btn-success-pastel.active {
+  color: #ffffff;
+  background-color: #7F8D80;
+  border-color: #7F8D80;
+}
+
+.btn-success-pastel:active,
+.btn-success-pastel.active {
+  background-image: none;
+}
+
+.btn-success-pastel.disabled,
+.btn-success-pastel[disabled],
+fieldset[disabled] .btn-success-pastel,
+.btn-success-pastel.disabled:hover,
+.btn-success-pastel[disabled]:hover,
+fieldset[disabled] .btn-success-pastel:hover,
+.btn-success-pastel.disabled:focus,
+.btn-success-pastel[disabled]:focus,
+fieldset[disabled] .btn-success-pastel:focus,
+.btn-success-pastel.disabled:active,
+.btn-success-pastel[disabled]:active,
+fieldset[disabled] .btn-success-pastel:active,
+.btn-success-pastel.disabled.active,
+.btn-success-pastel[disabled].active,
+fieldset[disabled] .btn-success-pastel.active {
+  background-color: #B2B296;
+  border-color: #B2B296;
+}
+
+.btn-info-pastel {
+  color: #ffffff;
+  background-color: #78CCBA;
+  border-color: #78CCBA;
+}
+
+.btn-info-pastel:hover,
+.btn-info-pastel:focus,
+.btn-info-pastel:active,
+.btn-info-pastel.active {
+  color: #ffffff;
+  background-color: #67AB9C;
+  border-color: #67AB9C;
+}
+
+.btn-info-pastel:active,
+.btn-info-pastel.active {
+  background-image: none;
+}
+
+.btn-info-pastel.disabled,
+.btn-info-pastel[disabled],
+fieldset[disabled] .btn-info-pastel,
+.btn-info-pastel.disabled:hover,
+.btn-info-pastel[disabled]:hover,
+fieldset[disabled] .btn-info-pastel:hover,
+.btn-info-pastel.disabled:focus,
+.btn-info-pastel[disabled]:focus,
+fieldset[disabled] .btn-info-pastel:focus,
+.btn-info-pastel.disabled:active,
+.btn-info-pastel[disabled]:active,
+fieldset[disabled] .btn-info-pastel:active,
+.btn-info-pastel.disabled.active,
+.btn-info-pastel[disabled].active,
+fieldset[disabled] .btn-info-pastel.active {
+  background-color: #9DCCC2;
+  border-color: #9DCCC2;
+}
