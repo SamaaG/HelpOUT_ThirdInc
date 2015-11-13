@@ -2,72 +2,20 @@
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script type="text/javascript">
- 
-function logout()
-{
-    gapi.auth.signOut();
-    location.reload();
-}
-function login()
-{
-  var myParams = {
-    'clientid' : '336837821700-hpio3ub9grvbhh396ghg5lv7j9gnlo8s.apps.googleusercontent.com',
-    'cookiepolicy' : 'single_host_origin',
-    'callback' : 'loginCallback',
-    'approvalprompt':'force',
-    'scope' : 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read'
-  };
-  gapi.auth.signIn(myParams);
-}
- 
-function loginCallback(result)
-{
-    if(result['status']['signed_in'])
-    {
-        var request = gapi.client.plus.people.get(
-        {
-            'userId': 'me'
-        });
-        request.execute(function (resp)
-        {
-            var email = '';
-            if(resp['emails'])
-            {
-                for(i = 0; i < resp['emails'].length; i++)
-                {
-                    if(resp['emails'][i]['type'] == 'account')
-                    {
-                        email = resp['emails'][i]['value'];
-                    }
-                }
-            }
- 
-            var str = "Hello " + resp['displayName'] + "!";
-            /*str += "Image:" + resp['image']['url'] + "<br>";
-            str += "<img src='" + resp['image']['url'] + "' /><br>";
- 
-            str += "URL:" + resp['url'] + "<br>";
-            str += "Email:" + email + "<br>";*/
-            document.getElementById("profile").innerHTML = str;
-        });
- 
-    }
- 
-}
-function onLoadCallback()
-{
-    gapi.client.setApiKey('AIzaSyDyNrmpNQK8ZJpczBa7n_K8S9cDt-cUBd4');
-    gapi.client.load('plus', 'v1',function(){});
-}
- 
-</script>
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());
+    }
 
-<script type="text/javascript">
-      (function() {
-       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-       po.src = 'https://apis.google.com/js/client.js?onload=onLoadCallback';
-       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-     })();
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+    }
 </script>
 
 @if (Request.IsAuthenticated)
@@ -91,13 +39,10 @@ else
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
-  <li>
-    <a href="#">
-        <img class="googleLogo navbar-right" onclick="login()" src="~/Content/imgs/GooglePlus.png" />
-    </a>
-</li>
-<li>
-    <label class="navbar-right profileInfo" id="profile"></label>
+
+<li class="navbar-right list-unstyled">
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <a href="#" onclick="signOut();">Sign out</a>
 </li>
 
 
