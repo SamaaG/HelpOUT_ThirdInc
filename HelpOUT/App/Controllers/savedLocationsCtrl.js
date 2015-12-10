@@ -6,6 +6,7 @@
         // MODEL PROPERTIES
         $scope.sortType = "name";
         $scope.sortReverse = false;
+        $scope.allChecked = false;
 
         // PRIVATE METHODS
         var removeFromLocationArray = function (array, location) {
@@ -23,7 +24,9 @@
 
         $scope.selectLocation = function (location) {
             if (location.checked) {
-                selectedLocations.push(location);
+                if (selectedLocations.indexOf(location) === -1) {
+                    selectedLocations.push(location);
+                }
                 $scope.anyLocationsSelected = true;
             } else {
                 removeFromLocationArray(selectedLocations, location);
@@ -33,12 +36,29 @@
             }
         }
 
+        $scope.selectToggle = function() {
+            $scope.locations.forEach(function(location) {
+                if (!$scope.allChecked) {
+                    location.checked = true;
+                } else {
+                    delete location.checked;
+                }
+                $scope.selectLocation(location);
+            });
+            $scope.allChecked = !$scope.allChecked;
+        }
+
         $scope.createLocation = function () {
             var modalInstance = $uibModal.open({
                 animation: true,
+                size: 'lg',
                 templateUrl: 'App/Templates/createLocationModal.html',
                 controller: 'createLocationModalCtrl',
-                size: 'lg'
+                resolve: {
+                    location: function () {
+                        return null;
+                    }
+                }
             });
 
             modalInstance.result.then(function () {
@@ -90,8 +110,6 @@
                         removeFromLocationArray($scope.locations, location);
                         removeFromLocationArray(selectedLocations, location);
                         $scope.anyLocationsSelected = false;
-                    }, function (err) {
-                        // display friendly error message
                     });
                 });
             });

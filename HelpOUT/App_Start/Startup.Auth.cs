@@ -58,11 +58,11 @@ namespace HelpOUT
             //   appId: "",
             //   appSecret: "");
 
-            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            {
-                ClientId = "336837821700-i3f7gj6t6iahv274bq1vq35u5kirkemr.apps.googleusercontent.com",
-                ClientSecret = "nesPw_XfAycp7Tf7MH0NLs4z"
-            });
+            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            //{
+            //    ClientId = "",
+            //    ClientSecret = ""
+            //});
         }
     }
 }

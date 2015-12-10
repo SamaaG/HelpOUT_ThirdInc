@@ -18,7 +18,6 @@ namespace HelpOUT
                 "~/Scripts/datetimepicker.js",
                 "~/Scripts/angular-route.js",
                 "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
-                "~/Scripts/location-autocomplete.js",
                 "~/Scripts/ngAutocomplete.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/helpOut").Include(
@@ -34,8 +33,10 @@ namespace HelpOUT
                 "~/App/Controllers/editTaskModalCtrl.js",
                 "~/App/Controllers/createTripModalCtrl.js",
                 "~/App/Controllers/addTaskModalCtrl.js",
-                "~/App/Controllers/tripModalCtrl.js",
+                "~/App/Controllers/addLocationModalCtrl.js",
+                "~/App/Controllers/tripCtrl.js",
                 "~/App/Controllers/confirmationModalCtrl.js",
+                "~/App/Controllers/confirmCompletedTripModalCtrl.js",
                 "~/App/Services/taskSvc.js",
                 "~/App/Services/tripSvc.js",
                 "~/App/Services/locationSvc.js",
@@ -44,8 +45,9 @@ namespace HelpOUT
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/datetimepicker.css",
-                "~/Content/site.css"));
-
+                "~/Content/site.css",
+                "~/Content/angular-toggle-switch-bootstrap-3.css",
+                "~/Content/style.css"));
         }
     }
 }

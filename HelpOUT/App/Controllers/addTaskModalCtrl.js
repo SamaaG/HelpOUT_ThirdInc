@@ -1,9 +1,12 @@
 ﻿helpOutModule.controller('addTaskModalCtrl', ["$scope", "$modalInstance", "taskSvc", "tripTasks",
     function ($scope, $modalInstance, taskSvc, tripTasks) {
+        // PRIVATE PROPERTIES
+        var selectedTasks = !tripTasks ? [] : tripTasks;
+
         // MODEL PROPERTIES
-        $scope.sortType = "date";
+        $scope.sortType = "datetime";
         $scope.sortReverse = false;
-        $scope.selectedTasks = !tripTasks ? [] : tripTasks;
+        $scope.allChecked = false;
 
         // PRIVATE METHODS
         var removeFromTaskArray = function (array, task) {
@@ -14,30 +17,42 @@
         }
 
         // MODEL METHODS
-        $scope.test = function(task) {
-            var index = $scope.tasks.indexOf(task);
-            var inArray = index > -1;
-            alert(inArray);
-        }
-
         $scope.sort = function (criteria) {
             $scope.sortType = criteria;
             $scope.sortReverse = !$scope.sortReverse;
         }
 
+        $scope.selectToggle = function () {
+            $scope.tasks.forEach(function (task) {
+                if (!$scope.allChecked) {
+                    task.checked = true;
+                } else {
+                    delete task.checked;
+                }
+                $scope.selectTask(task);
+            });
+            $scope.allChecked = !$scope.allChecked;
+        }
+
         $scope.selectTask = function (task) {
             if (task.checked) {
-                $scope.selectedTasks.push(task);
+                if (selectedTasks.indexOf(task) === -1) {
+                    selectedTasks.push(task);
+                }
+                $scope.anyTasksSelected = true;
             } else {
-                removeFromTaskArray($scope.selectedTasks, task);
+                removeFromTaskArray(selectedTasks, task);
+                if (selectedTasks.length === 0) {
+                    $scope.anyTasksSelected = false;
+                }
             }
         }
 
         $scope.addTasks = function () {
-            $scope.selectedTasks.forEach(function(task) {
+            selectedTasks.forEach(function(task) {
                 delete task.checked;
             });
-            $modalInstance.close($scope.selectedTasks);
+            $modalInstance.close(selectedTasks);
         };
 
         $scope.cancel = function () {
@@ -49,10 +64,10 @@
             $scope.tasks = response.data;
 
             var selectedTaskIds = [];
-            $scope.selectedTasks.forEach(function(task) {
+            selectedTasks.forEach(function(task) {
                 selectedTaskIds.push(task._id.$oid);
             });
-            $scope.selectedTasks = [];
+            selectedTasks = [];
             $scope.tasks.forEach(function(task) {
                 if (selectedTaskIds.indexOf(task._id.$oid) > -1) {
                     task.checked = true;

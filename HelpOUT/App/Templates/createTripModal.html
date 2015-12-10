@@ -5,9 +5,9 @@
 <div class="modal-body">
     <form name="createTripForm" class="form-horizontal" novalidate>
         <div class="form-group">
-            <label for="title" class="col-sm-3 col-md-2 control-label">* Title:</label>
+            <label for="name" class="col-sm-3 col-md-2 control-label">* Name:</label>
             <div class="col-sm-9 col-md-10">
-                <input type="text" class="form-control" id="title" ng-model="title" required>
+                <input type="text" class="form-control" id="name" ng-model="name" placeholder="Enter a trip name" required>
             </div>
         </div>
         <div class="form-group">
@@ -16,7 +16,7 @@
                 <div class="dropdown">
                     <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" data-target="#" href="#">
                         <div class="input-group date" id='datetimepicker'>
-                            <input type="text" class="form-control" data-ng-model="datetime" required><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            <input type="text" class="form-control" data-ng-model="datetime" placeholder="Enter a starting time" required><span class="input-group-addon btn-default"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                     </a>
                     <ul class="dropdown-menu" role="menu">
@@ -28,7 +28,18 @@
         <div class="form-group">
             <label for="startLocation" class="col-sm-3  col-md-2 control-label">* Start location:</label>
             <div class="col-sm-9 col-md-10">
-                <input type="text" class="form-control" id="startLocation" ng-model="startLocation" ng-autocomplete="startLocation" required>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="startLocation" ng-model="startAddress" ng-autocomplete="startAddress" details="startLocationDetails" required>
+                            <span class="input-group-addon btn-default" ng-click="createLocation(true)" ng-disabled="!startAddress"><i class="glyphicon glyphicon-star"></i></span>
+                        </div>
+                    </div>
+                    <div class="btn-form">
+                        <button class="btn btn-success-pastel" ng-click="addExistingLocation(true)"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Locations</button>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="form-group">
@@ -36,14 +47,16 @@
             <div class="col-sm-9 col-md-10">
                 <table class="table table-striped" id="tasks" ng-show="tasks.length > 0">
                     <tr>
-                        <th>Title</th>
+                        <th>Name</th>
                         <th>Date</th>
-                        <th><span class="glyphicon glyphicon-ok"></span></th>
+                        <th class="text-center">
+                            <a href="" ng-click="selectToggle()"><span ng-class="{'glyphicon glyphicon-ok' : !allChecked, 'glyphicon glyphicon-unchecked' : allChecked}"></span></a>
+                        </th>
                     </tr>
                     <tr data-ng-repeat="task in tasks" ng-click="task.checked = !task.checked; selectTask(task)" class="selectRow" ng-class="{success: task.checked}">
-                        <td>{{task.title}}</td>
+                        <td>{{task.name}}</td>
                         <td>{{task.datetime | date:'M/d/yyyy hh:mma'}}</td>
-                        <td><input type="hidden" ng-model="task.checked" /><span ng-class="{'glyphicon glyphicon-ok' : task.checked, 'glyphicon glyphicon-unchecked' : !task.checked}"></span></td>
+                        <td class="text-center"><input type="hidden" ng-model="task.checked" /><span ng-class="{'glyphicon glyphicon-ok' : task.checked, 'glyphicon glyphicon-unchecked' : !task.checked}"></span></td>
                     </tr>
                 </table>
                 <div class="text-right">
@@ -55,12 +68,18 @@
         <div class="form-group">
             <label for="endLocation" class="col-sm-3 col-md-2 control-label">End location:</label>
             <div class="col-sm-9 col-md-10">
-                <div class="input-group">
-                    <span class="input-group-addon">
-                        <input type="checkbox" ng-model="endLocationChecked" ng-change="endLocation = endLocationChecked ? endLocation : ''">
-                    </span>
-                    <input type="text" class="form-control" id="endLocation" ng-model="endLocation" ng-autocomplete="endLocation" ng-disabled="!endLocationChecked" />
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="endLocation" ng-model="endAddress" ng-autocomplete="endAddress" details="endLocationDetails">
+                            <span class="input-group-addon btn-default" ng-click="createLocation(false)" ng-disabled="!endAddress"><i class="glyphicon glyphicon-star"></i></span>
+                        </div>
+                    </div>
+                    <div class="btn-form">
+                        <button class="btn btn-success-pastel" ng-click="addExistingLocation(false)"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Locations</button>
+                    </div>
                 </div>
+
             </div>
         </div>
         <div class="form-group">

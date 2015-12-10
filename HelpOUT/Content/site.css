@@ -1,4 +1,4 @@
-﻿*, h1 {
+﻿*, h1, h3 {
     font-family:Trebuchet MS;
 }
 
@@ -54,35 +54,35 @@ a.nav-btn:hover {
 }
 
 #tripsBtn {
-    background-color: #90C3D4;
+    background-color: #E99F86;
 }
 
 #tripsBtn:hover {
-    background-color: #71ACBF;
+    background-color: #DB896E;
 }
 
 #completedTripsBtn {
-    background-color: #90C3D4;
+    background-color: #E99F86;
 }
 
 #completedTripsBtn:hover {
-    background-color: #71ACBF;
+    background-color: #DB896E;
 }
 
 #tasksBtn {
-    background-color: #E99F86;
+    background-color: #90C3D4;
 }
 
 #tasksBtn:hover {
-    background-color: #DB896E;
+    background-color: #71ACBF;
 }
 
 #completedTasksBtn {
-    background-color: #E99F86;
+    background-color: #90C3D4;
 }
 
 #completedTasksBtn:hover {
-    background-color: #DB896E;
+    background-color: #71ACBF;
 }
 
 #locationsBtn {
@@ -268,4 +268,52 @@ fieldset[disabled] .btn-info-pastel:active,
 fieldset[disabled] .btn-info-pastel.active {
   background-color: #9DCCC2;
   border-color: #9DCCC2;
+}
+
+@media (max-width: 991px) {
+   .btn-form {
+       padding: 10px 15px 0 15px;
+       text-align: right;
+   } 
+}
+
+.input-group-addon {
+    cursor: pointer;
+}
+
+.input-group:disabled,
+.input-group-addon[disabled] {
+    cursor: default;
+}
+
+.input-group-addon:disabled i,
+.input-group-addon[disabled] i {
+    color: #d3d3d3;
+}
+
+#map-canvas, #directions {
+    height: 550px;
+    overflow: auto;
+}
+
+.adp-placemark {
+    margin: 0 0 20px 0 !important;
+}
+
+.adp-placemark td {
+    padding: 10px !important;
+}
+
+.adp-directions {
+    width: 100% !important;
+    margin-bottom: 50px !important;
+}
+
+.marker {
+    width: 70px;
+    text-align: center;
+}
+
+.tripTaskList {
+    margin-top: 60px;
 }

@@ -4,8 +4,9 @@
         var selectedTasks = [];
 
         // MODEL PROPERTIES
-        $scope.sortType = "date";
+        $scope.sortType = "datetime";
         $scope.sortReverse = false;
+        $scope.allChecked = false;
 
         // PRIVATE METHODS
         var removeFromTaskArray = function (array, task) {
@@ -21,9 +22,23 @@
             $scope.sortReverse = !$scope.sortReverse;
         }
 
+        $scope.selectToggle = function () {
+            $scope.tasks.forEach(function (task) {
+                if (!$scope.allChecked) {
+                    task.checked = true;
+                } else {
+                    delete task.checked;
+                }
+                $scope.selectTask(task);
+            });
+            $scope.allChecked = !$scope.allChecked;
+        }
+
         $scope.selectTask = function (task) {
             if (task.checked) {
-                selectedTasks.push(task);
+                if (selectedTasks.indexOf(task) === -1) {
+                    selectedTasks.push(task);
+                }
                 $scope.anyTasksSelected = true;
             } else {
                 removeFromTaskArray(selectedTasks, task);
@@ -55,8 +70,6 @@
                         removeFromTaskArray($scope.tasks, task);
                         removeFromTaskArray(selectedTasks, task);
                         $scope.anyTasksSelected = false;
-                    }, function (err) {
-                        // display friendly error message
                     });
                 });
             });
@@ -86,9 +99,6 @@
                     taskSvc.updateTask(task).then(function () {
                         removeFromTaskArray($scope.tasks, task);
                         removeFromTaskArray(selectedTasks, task);
-                    }, function (err) {
-                        task.checked = true;
-                        // display friendly error message
                     });
                 });
                 $scope.anyTasksSelected = false;

@@ -1,24 +1,23 @@
-﻿helpOutModule.controller('createLocationModalCtrl', ["$scope", "$modalInstance", "locationSvc",
-    function ($scope, $modalInstance, locationSvc) {
+﻿helpOutModule.controller('createLocationModalCtrl', ["$scope", "$modalInstance", "locationSvc", "location",
+    function ($scope, $modalInstance, locationSvc, location) {
+        $scope.location = location;
+        
         $scope.createLocation = function () {
-            $scope.submitting = true;  // will use this for a spinner
-
-            // might need to store LatLng data for trips
-            $scope.location = {
-                "name": $scope.name,
-                "address": $scope.address,
-                "comments": $scope.comments
+            var hasNewPlaceDetails = $scope.locationDetails;
+            var location = {
+                "query": $scope.location.query,
+                "fullAddress": hasNewPlaceDetails ? $scope.locationDetails.formatted_address : $scope.location.fullAddress,
+                "geometry" : hasNewPlaceDetails ? $scope.locationDetails.geometry : $scope.location.geometry,
+                "placeId": hasNewPlaceDetails ? $scope.locationDetails.place_id : $scope.location.placeId,
+                "name": $scope.location.name,
+                "icon": hasNewPlaceDetails ? $scope.locationDetails.icon : $scope.location.icon,
+                "comments": $scope.location.comments
             };
 
-            locationSvc.postLocation($scope.location).then(function () {
-                $scope.submitting = false;
-                $modalInstance.close();
-            }, function (err) {
-                $scope.submitting = false;
-                // display friendly error message
+            locationSvc.postLocation(location).then(function () {
+                $modalInstance.close(location);
             });
         };
-
 
         $scope.cancel = function () {
             $modalInstance.dismiss();

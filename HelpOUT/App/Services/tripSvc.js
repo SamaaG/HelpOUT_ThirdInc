@@ -9,6 +9,10 @@
             getArchivedTrips: function () {
                 return $http.get(baseURL + '?q={"isComplete":true}&apiKey=' + apiKey);
             },
+            getTrip: function (tripId) {
+                //GET /databases/{database}/collections/{collection}/{_id}
+                return $http.get(baseURL + '/' + tripId + '?apiKey=' + apiKey);
+            },
             updateTrip: function (trip) {
                 return $http.put(baseURL + '/' + trip._id.$oid + '?apiKey=' + apiKey, trip);
             },

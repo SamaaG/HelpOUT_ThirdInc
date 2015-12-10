@@ -4,9 +4,10 @@
         var selectedTasks = [];
 
         // MODEL PROPERTIES
-        $scope.sortType = "date";
+        $scope.sortType = "datetime";
         $scope.sortReverse = false;
         $scope.currentDate = moment().format();
+        $scope.allChecked = false;
 
         // PRIVATE METHODS
         var removeFromTaskArray = function (array, task) {
@@ -17,6 +18,11 @@
         }
 
         // MODEL METHODS
+        $scope.addDays = function (date, days) {
+            var result = moment(date).add(days, 'days').format();
+            return result;
+        }
+
         $scope.sort = function (criteria) {
             $scope.sortType = criteria;
             $scope.sortReverse = !$scope.sortReverse;
@@ -57,19 +63,33 @@
             });
         }
 
+        $scope.selectToggle = function () {
+            $scope.tasks.forEach(function (task) {
+                if (!$scope.allChecked) {
+                    task.checked = true;
+                } else {
+                    delete task.checked;
+                }
+                $scope.selectTask(task);
+            });
+            $scope.allChecked = !$scope.allChecked;
+        }
+
         $scope.selectTask = function (task) {
             if (task.checked) {
-                selectedTasks.push(task);
+                if (selectedTasks.indexOf(task) === -1) {
+                    selectedTasks.push(task);
+                }
                 $scope.anyTasksSelected = true;
             } else {
                 removeFromTaskArray(selectedTasks, task);
                 if (selectedTasks.length === 0) {
                     $scope.anyTasksSelected = false;
+                }
             }
         }
-        }
 
-        $scope.removeTask = function () {
+        $scope.removeTasks = function () {
             if (selectedTasks.length === 0) return;
             var modalInstance = $uibModal.open({
                 animation: true,
@@ -80,7 +100,7 @@
                         return "delete";
                     },
                     objects: function () {
-                        return "tasks";
+                        return "task(s)";
                     }
                 }
             });
@@ -98,7 +118,30 @@
             });
         };
 
-        $scope.markFinished = function () {
+        //for timeline view
+        $scope.removeTask = function (task) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'App/Templates/confirmationModal.html',
+                controller: 'confirmationModalCtrl',
+                resolve: {
+                    action: function () {
+                        return "delete";
+                    },
+                    objects: function () {
+                        return "task";
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                    taskSvc.deleteTask(task._id.$oid).then(function () {
+                        removeFromTaskArray($scope.tasks, task);
+                    });
+            });
+        };
+
+        $scope.markTasksFinished = function () {
             if (selectedTasks.length === 0) return;
             var modalInstance = $uibModal.open({
                 animation: true,
@@ -128,6 +171,32 @@
                         // display friendly error message
                     });
                 });
+            });
+        };
+
+        //for timeline view
+        $scope.markFinished = function (task) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'App/Templates/confirmationModal.html',
+                controller: 'confirmationModalCtrl',
+                resolve: {
+                    action: function () {
+                        return "mark as complete";
+                    },
+                    objects: function () {
+                        return "task";
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                    task.isComplete = true;
+                    taskSvc.updateTask(task).then(function () {
+                        removeFromTaskArray($scope.tasks, task);
+                    }, function (err) {
+                        // display friendly error message
+                    });
             });
         };
 

@@ -9,6 +9,10 @@
             getArchivedTasks: function() {
                 return $http.get(baseURL + '?q={"isComplete":true}&apiKey=' + apiKey);
             },
+            getTask: function(taskId) {
+                //GET /databases/{database}/collections/{collection}/{_id}
+                return $http.get(baseURL + '/' + taskId + '?apiKey=' + apiKey);
+            },
             updateTask: function(task) {
                 return $http.put(baseURL + '/' + task._id.$oid + '?apiKey=' + apiKey, task);
             },

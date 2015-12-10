@@ -1,11 +1,13 @@
-﻿helpOutModule.controller("activeTripsCtrl", ["$scope", "tripSvc", "$uibModal",
-    function ($scope, tripSvc, $uibModal) {
+﻿helpOutModule.controller("activeTripsCtrl", ["$scope", "tripSvc", "$uibModal", "$location",
+    function ($scope, tripSvc, $uibModal, $location) {
         // PRIVATE PROPETIES
         var selectedTrips = [];
 
         // MODEL PROPERTIES
-        $scope.sortType = "date";
+        $scope.sortType = "datetime";
         $scope.sortReverse = false;
+        $scope.currentDate = moment().format();
+        $scope.allChecked = false;
 
         // PRIVATE METHODS
         var removeFromTripArray = function (array, trip) {
@@ -16,6 +18,11 @@
         }
 
         // MODEL METHODS
+        $scope.addDays = function (date, days) {
+            var result = moment(date).add(days, 'days').format();
+            return result;
+        }
+
         $scope.sort = function (criteria) {
             $scope.sortType = criteria;
             $scope.sortReverse = !$scope.sortReverse;
@@ -36,29 +43,27 @@
             });
         };
 
-        $scope.viewTrip = function (trip) {
-            var modalInstance = $uibModal.open({
-                animation: true,
-                size: 'lg',
-                templateUrl: 'App/Templates/tripModal.html',
-                controller: 'tripModalCtrl',
-                resolve: {
-                    trip: function () {
-                        return trip;
-                    }
-                }
-            });
+        $scope.viewTrip = function (tripId) {
+            $location.path('/trip/' + tripId);
+        }
 
-            modalInstance.result.then(function () {
-                tripSvc.getCurrentTrips().then(function (response) {
-                    $scope.trips = response.data;
-                });
+        $scope.selectToggle = function () {
+            $scope.trips.forEach(function (trip) {
+                if (!$scope.allChecked) {
+                    trip.checked = true;
+                } else {
+                    delete trip.checked;
+                }
+                $scope.selectTrip(trip);
             });
+            $scope.allChecked = !$scope.allChecked;
         }
 
         $scope.selectTrip = function (trip) {
             if (trip.checked) {
-                selectedTrips.push(trip);
+                if (selectedTrips.indexOf(trip) === -1) {
+                    selectedTrips.push(trip);
+                }
                 $scope.anyTripsSelected = true;
             } else {
                 removeFromTripArray(selectedTrips, trip);
@@ -90,8 +95,6 @@
                         removeFromTripArray($scope.trips, trip);
                         removeFromTripArray(selectedTrips, trip);
                         $scope.anyTripsSelected = false;
-                    }, function (err) {
-                        // display friendly error message
                     });
                 });
             });
@@ -101,14 +104,12 @@
             if (selectedTrips.length === 0) return;
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'App/Templates/confirmationModal.html',
-                controller: 'confirmationModalCtrl',
+                size: 'lg',
+                templateUrl: 'App/Templates/confirmCompletedTripModal.html',
+                controller: 'confirmCompletedTripModalCtrl',
                 resolve: {
-                    action: function () {
-                        return "mark as complete";
-                    },
-                    objects: function () {
-                        return "trips";
+                    trips: function () {
+                        return selectedTrips;
                     }
                 }
             });

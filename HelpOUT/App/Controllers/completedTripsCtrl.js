@@ -4,8 +4,9 @@
         var selectedTrips = [];
 
         // MODEL PROPERTIES
-        $scope.sortType = "date";
+        $scope.sortType = "datetime";
         $scope.sortReverse = false;
+        $scope.allChecked = false;
 
         // PRIVATE METHODS
         var removeFromTripArray = function (array, trip) {
@@ -41,9 +42,23 @@
             });
         }
 
+        $scope.selectToggle = function () {
+            $scope.trips.forEach(function (trip) {
+                if (!$scope.allChecked) {
+                    trip.checked = true;
+                } else {
+                    delete trip.checked;
+                }
+                $scope.selectTrip(trip);
+            });
+            $scope.allChecked = !$scope.allChecked;
+        }
+
         $scope.selectTrip = function (trip) {
             if (trip.checked) {
-                selectedTrips.push(trip);
+                if (selectedTrips.indexOf(trip) === -1) {
+                    selectedTrips.push(trip);
+                }
                 $scope.anyTripsSelected = true;
             } else {
                 removeFromTripArray(selectedTrips, trip);
@@ -75,8 +90,6 @@
                         removeFromTripArray($scope.trips, trip);
                         removeFromTripArray(selectedTrips, trip);
                         $scope.anyTripsSelected = false;
-                    }, function (err) {
-                        // display friendly error message
                     });
                 });
             });

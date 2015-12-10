@@ -1,0 +1,42 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+    <h4 class="modal-title">Finished a trip?&nbsp;&nbsp;Great job!</h4>
+</div>
+<div class="modal-body">
+    <p><em>Were these <strong>tasks</strong> also completed?</em></p>
+    <div ng-repeat="trip in tripData">
+        <h5><strong>{{trip.tripName}}</strong></h5>
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    <a class="tbl-hd" href="" ng-click="sort('name')">
+                        Name <span ng-class="{'glyphicon glyphicon-chevron-up' : sortType === 'name' && !sortReverse, 'glyphicon glyphicon-chevron-down' : sortType === 'name' && sortReverse, 'glyphicon glyphicon-minus opaque' : sortType != 'name'}"></span>
+                    </a>
+                </th>
+                <th>
+                    <a class="tbl-hd" href="" ng-click="sort('datetime')">
+                        Due date <span ng-class="{'glyphicon glyphicon-chevron-up' : sortType === 'datetime' && !sortReverse, 'glyphicon glyphicon-chevron-down' : sortType === 'datetime' && sortReverse, 'glyphicon glyphicon-minus opaque' : sortType != 'datetime'}"></span>
+                    </a>
+                </th>
+                <th>
+                    <a class="tbl-hd" href="" ng-click="sort('location.name')">
+                        Location <span ng-class="{'glyphicon glyphicon-chevron-up' : sortType === 'location.name' && !sortReverse, 'glyphicon glyphicon-chevron-down' : sortType === 'location.name' && sortReverse, 'glyphicon glyphicon-minus opaque' : sortType != 'location.name'}"></span>
+                    </a>
+                </th>
+                <th class="text-center">
+                    <a href="" ng-click="selectToggle()"><span ng-class="{'glyphicon glyphicon-ok' : !allChecked, 'glyphicon glyphicon-unchecked' : allChecked}"></span></a>
+                </th>
+            </tr>
+            <tr ng-repeat="task in trip.tasks | orderBy:sortType:sortReverse | filter:filters" ng-click="task.checked = !task.checked; selectTask(task, trip)" class="selectRow" ng-class="{success: task.checked}">
+                <td>{{task.name}}</td>
+                <td>{{task.datetime | date:'M/d/yyyy hh:mma'}}</td>
+                <td>{{task.location.name}}</td>
+                <td class="text-center"><input type="hidden" ng-model="task.checked" /><span ng-class="{'glyphicon glyphicon-ok' : task.checked, 'glyphicon glyphicon-unchecked' : !task.checked}"></span></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success-pastel" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-danger-pastel" type="button" ng-click="cancel()">Cancel</button>
+</div>

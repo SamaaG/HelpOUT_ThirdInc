@@ -1,0 +1,99 @@
+﻿<div class="row top-buffer center-text">
+    <div class="col-md-4">
+        <a href="#tasks" class="nav-btn" id="tasksBtn">
+            <img class="nav-icon" src="../../Content/imgs/CheckList.png" title="Active Tasks" /><br />Tasks
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="#trips" class="nav-btn" id="tripsBtn">
+            <img class="nav-icon" src="../../Content/imgs/trips icon.png" title="Active Trips" /><br />Trips
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="#locations" class="nav-btn" id="locationsBtn">
+            <img class="nav-icon" src="../../Content/imgs/saved places.png" title="Saved Locations" /><br />Locations
+        </a>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-md-12">
+        <h1>{{trip.name}}&nbsp;&nbsp;<small>{{tripDateTime | date:'M/d/yyyy - h:mm a'}}</small></h1>
+    </div>
+</div>
+
+<div class="row top-buffer">
+    <div class="col-md-7">
+        <div id="map-canvas"></div>
+    </div>
+    <div class="col-md-5">
+        <div id="directions"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped tripTaskList" ng-if="haveDirections">
+            <tr>
+                <th class="marker">Marker</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Comments</th>
+                <th>Due date</th>
+            </tr>
+            <tr>
+                <td class="marker"><img src="https://mts.googleapis.com/maps/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png&text=A&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1" /></td>
+                <td>Starting location</td>
+                <td>
+                    {{trip.startLocation.name}}<br/>
+                    {{trip.startLocation.fullAddress}}
+                </td>
+                <td class="multiline">{{trip.startLocation.comments}}</td>
+                <td>---</td>
+            </tr>
+            <tr ng-repeat="task in reOrderedTasks">
+                
+                <td class="marker"><img ng-src="https://mts.googleapis.com/maps/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png&text={{getChar(reOrderedTasks.indexOf(task))}}&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1" /></td>
+                <td>{{task.name}}</td>
+                <td>
+                    {{task.location.name}}<br/>
+                    {{task.location.fullAddress}}
+                </td>
+                <td class="multiline">{{task.comments}}</td>
+                <td>{{task.datetime | date:'M/d/yyyy - h:mm a'}}</td>
+            </tr>
+            <tr ng-if="trip.endLocation.name">
+                <td class="marker"><img ng-src="https://mts.googleapis.com/maps/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&text={{getChar(reOrderedTasks.length)}}&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1" /></td>
+                <td>Ending location</td>
+                <td>
+                    {{trip.endLocation.name}}<br/>
+                    {{trip.endLocation.fullAddress}}
+                </td>
+                <td class="multiline">{{trip.endLocation.comments}}</td>
+                <td>---</td>
+            </tr>
+            <tr ng-if="!trip.endLocation.name">
+                <td class="marker"><img ng-src="https://mts.googleapis.com/maps/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&text={{getChar(reOrderedTasks.length)}}&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1" /></td>
+                <td>Ending location</td>
+                <td>
+                    {{trip.startLocation.name}}<br/>
+                    {{trip.startLocation.fullAddress}}
+                </td>
+                <td class="multiline">{{trip.startLocation.comments}}</td>
+                <td>---</td>
+            </tr>
+        </table>
+        <div class="well multiline" ng-if="trip.comments">{{trip.comments}}</div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 text-right">
+        <button class="btn btn-danger-pastel" ng-click="delete()">
+            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;&nbsp;Delete
+        </button>
+        <button class="btn btn-success-pastel" ng-click="markFinished()">
+            <span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;Finished!
+        </button>
+    </div>
+</div>

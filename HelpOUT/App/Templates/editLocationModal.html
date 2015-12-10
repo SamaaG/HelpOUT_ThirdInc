@@ -13,7 +13,7 @@
         <div class="form-group">
             <label for="autocomplete" class="col-sm-3 col-md-2 control-label">* Address:</label>
             <div class="col-sm-9 col-md-10">
-                <input type="text" class="form-control" id="autocomplete" ng-model="location.address" onfocus="initialize()" required>
+                <input type="text" class="form-control" id="autocomplete" ng-autocomplete="location.query" details="locationDetails" ng-model="location.query" required>
             </div>
         </div>
         <div class="form-group">
@@ -28,6 +28,6 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-    <button type="button" class="btn btn-success-pastel" ng-click="updateLocation()" ng-disabled="editLocationForm.$invalid">Update Location</button>
+    <button type="button" class="btn btn-default" ng-click="cancel()" ng-disabled="submitting">Cancel</button>
+    <button type="button" class="btn btn-success-pastel" ng-click="updateLocation()" ng-disabled="editLocationForm.$invalid || submitting">Update Location</button>
 </div>

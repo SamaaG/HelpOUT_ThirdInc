@@ -1,0 +1,30 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+    <h4 class="modal-title">Add a saved location</h4>
+</div>
+<div class="modal-body">
+    <table class="table table-striped">
+        <tr>
+            <th>
+                <a class="tbl-hd" href="" ng-click="sort('name')">
+                    Name <span ng-class="{'glyphicon glyphicon-chevron-up' : sortType === 'name' && !sortReverse, 'glyphicon glyphicon-chevron-down' : sortType === 'name' && sortReverse, 'glyphicon glyphicon-minus opaque' : sortType != 'name'}"></span>
+                </a>
+            </th>
+            <th>
+                <a class="tbl-hd" href="" ng-click="sort('query')">
+                    Address <span ng-class="{'glyphicon glyphicon-chevron-up' : sortType === 'query' && !sortReverse, 'glyphicon glyphicon-chevron-down' : sortType === 'query' && sortReverse, 'glyphicon glyphicon-minus opaque' : sortType != 'query'}"></span>
+                </a>
+            </th>
+            <th><span class="glyphicon glyphicon-ok"></span></th>
+        </tr>
+        <tr ng-repeat="location in locations | orderBy:sortType:sortReverse | filter:filters" ng-click="selectLocation(location)" class="selectRow" ng-class="{success: location.checked}">
+            <td>{{location.name}}</td>
+            <td>{{location.query}}</td>
+            <td><input type="hidden" ng-model="location.checked" /><span ng-class="{'glyphicon glyphicon-ok' : location.checked, 'glyphicon glyphicon-unchecked' : !location.checked}"></span></td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success-pastel" type="button" ng-click="addLocation()" ng-disabled="!selectedLocation">Add location</button>
+</div>

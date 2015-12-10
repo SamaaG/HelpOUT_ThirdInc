@@ -203,10 +203,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\Controllers\activeTripsCtrl.js" />
+    <Content Include="App\Controllers\addLocationModalCtrl.js" />
     <Content Include="App\Controllers\addTaskModalCtrl.js" />
     <Content Include="App\Controllers\completedTasksCtrl.js" />
     <Content Include="App\Controllers\completedTripsCtrl.js" />
     <Content Include="App\Controllers\confirmationModalCtrl.js" />
+    <Content Include="App\Controllers\confirmCompletedTripModalCtrl.js" />
     <Content Include="App\Controllers\createTaskModalCtrl.js" />
     <Content Include="App\Controllers\activeTasksCtrl.js" />
     <Content Include="App\Controllers\createTripModalCtrl.js" />
@@ -214,17 +216,19 @@
     <Content Include="App\Controllers\editTaskModalCtrl.js" />
     <Content Include="App\Controllers\createLocationModalCtrl.js" />
     <Content Include="App\Controllers\savedLocationsCtrl.js" />
-    <Content Include="App\Controllers\tripModalCtrl.js" />
+    <Content Include="App\Controllers\tripCtrl.js" />
     <Content Include="App\Directives\prettyDatetimeDirective.js" />
     <Content Include="App\helpOutModule.js" />
     <Content Include="App\Services\locationSvc.js" />
     <Content Include="App\Services\taskSvc.js" />
     <Content Include="App\Services\tripSvc.js" />
     <Content Include="App\Templates\activeTrips.html" />
+    <Content Include="App\Templates\addLocationModal.html" />
     <Content Include="App\Templates\addTaskModal.html" />
     <Content Include="App\Templates\completedTasks.html" />
     <Content Include="App\Templates\completedTrips.html" />
     <Content Include="App\Templates\confirmationModal.html" />
+    <Content Include="App\Templates\confirmCompletedTripModal.html" />
     <Content Include="App\Templates\createLocationModal.html" />
     <Content Include="App\Templates\createTaskModal.html" />
     <Content Include="App\Templates\activeTasks.html" />
@@ -232,13 +236,16 @@
     <Content Include="App\Templates\editLocationModal.html" />
     <Content Include="App\Templates\editTaskModal.html" />
     <Content Include="App\Templates\savedLocations.html" />
-    <Content Include="App\Templates\tripModal.html" />
+    <Content Include="App\Templates\trip.html" />
+    <Content Include="Content\angular-toggle-switch-bootstrap-3.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\datetimepicker.css" />
+    <Content Include="Content\imgs\cd-icon-location.svg" />
     <Content Include="Content\imgs\CheckList.png" />
     <Content Include="Content\imgs\GooglePlus.png" />
     <Content Include="Content\imgs\saved places.png" />
     <Content Include="Content\imgs\trips icon.png" />
+    <Content Include="Content\style.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -260,6 +267,8 @@
     <Content Include="Scripts\angular-sanitize.js" />
     <Content Include="Scripts\angular-sanitize.min.js" />
     <Content Include="Scripts\angular-scenario.js" />
+    <Content Include="Scripts\angular-toggle-switch.js" />
+    <Content Include="Scripts\angular-toggle-switch.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
@@ -567,10 +576,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\location-autocomplete.js" />
-    <Content Include="Scripts\ngAutocomplete.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\modernizr.js" />
+    <Content Include="Scripts\ngAutocomplete.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -608,8 +618,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\createTask\" />
-    <Folder Include="Views\Location\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

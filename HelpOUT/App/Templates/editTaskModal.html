@@ -1,13 +1,13 @@
 ﻿<div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
-    <h4 class="modal-title">Edit task '{{task.title}}'</h4>
+    <h4 class="modal-title">Edit task '{{task.name}}'</h4>
 </div>
 <div class="modal-body">
     <form name="editTaskForm" class="form-horizontal" novalidate>
         <div class="form-group">
-            <label for="title" class="col-sm-3 col-md-2 control-label">* Title:</label>
+            <label for="title" class="col-sm-3 col-md-2 control-label">* Name:</label>
             <div class="col-sm-9 col-md-10">
-                <input type="text" class="form-control" id="title" ng-model="task.title" required>
+                <input type="text" class="form-control" id="title" ng-model="task.name" required>
             </div>
         </div>
         <div class="form-group">
@@ -16,7 +16,7 @@
                 <div class="dropdown">
                     <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" data-target="#" href="#">
                         <div class="input-group date" id='datetimepicker'>
-                            <input type="text" class="form-control" ng-model="task.datetime" pretty-datetime required><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            <input type="text" class="form-control" ng-model="task.datetime" pretty-datetime required><span class="input-group-addon btn-default"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                     </a>
                     <ul class="dropdown-menu" role="menu">
@@ -28,7 +28,18 @@
         <div class="form-group">
             <label for="autocomplete" class="col-sm-3 col-md-2 control-label">* Location:</label>
             <div class="col-sm-9 col-md-10">
-                <input type="text" class="form-control" id="autocomplete" ng-model="task.location" onfocus="initialize()" required>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="autocomplete" ng-autocomplete="task.location.query" details="locationDetails" ng-model="task.location.query" required>
+                            <span class="input-group-addon btn-default" ng-click="createLocation()" ng-disabled="!task.location.query"><i class="glyphicon glyphicon-star"></i></span>
+                        </div>
+                    </div>
+                    <div class="btn-form">
+                        <button class="btn btn-success-pastel" ng-click="addExistingLocation()"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Locations</button>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="form-group">
